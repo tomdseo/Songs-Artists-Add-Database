@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'first_app/css/style.css' %}">
+    <title>Songs & Artists</title>
+</head>
+    <div class="songHeader">
+    <p id="songTitle">{{song.title}}</p>
+    <p id="songID">ID: {{song.id}}</p>
+        <p id="songDescription">Description:<span>{{song.description}}</span></p>
+    </div>
+
+    <div class="songFooter">
+    <p id="subTitleSongs">Artists:</p>
+    {% for artist in related_artists %}
+    <p id="songRelatedArtists">{{artist.name}}</p>
+    {% endfor %}
+    </div>
+
+ <form action="/add_artist_to_song/{{song.id}}" method="POST">
+     {% csrf_token %}
+    <select name="artist" class="selectpicker">
+    <option>None selected</option>
+    {% for artist in all_artists %}
+      <option name = "artist_name" value={{artist.id}}>{{artist.name}}</option>
+    {% endfor %}
+    </select>
+        <input name="dropdown_button" type="hidden" value="pushed">
+        <button type="submit" id="addButton" class="btn btn-lg btn-primary btn-block">Add</button>
+    </form>
+
+</body>
+</html>

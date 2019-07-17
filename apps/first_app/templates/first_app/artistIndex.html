@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'first_app/css/style.css' %}">
+    <title>Songs & Artists</title>
+</head>
+<body>
+    <div id="main">
+      <form action="/add_artist" method="POST">
+        {% csrf_token %}
+        <p id="addSong">Add an Artist</p>
+        <input name="form_name" type="text" id="inputTitle" class="form-control" placeholder="Name" required autofocus>
+        <textarea name="form_notes" type="text" id="inputDescription" class="form-control" placeholder="Notes" required></textarea>
+        <input name="form_button" type="hidden" value="pushed">
+        <button type="submit" id="addButton" class="btn btn-lg btn-primary btn-block">Add</button>
+    </form>
+         <div class="col-4">
+               <table id="songTable" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for artist in all_artists %}
+                    <tr>
+                        <td>
+                            {{artist.id}}
+                        </td>
+                        <td>
+                            {{artist.name}}
+                        </td>
+                        <td>
+                            <a href="artists/{{artist.id}}">View</a>
+                        </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+    </div>
+</body>
+</html>
